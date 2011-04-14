@@ -21,4 +21,8 @@ class Galilei::App < Sinatra::Base
     params[:filename].slice!('.haml')
     haml params[:filename].to_sym
   end
+  
+  helpers do
+    include Galilei::Helpers
+  end
 end
