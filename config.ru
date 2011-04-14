@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'haml'
 
 require 'environment.rb'
 require 'lib/galilei.rb'
