@@ -1,6 +1,12 @@
 require 'spec_helper'
 
+class TestClass
+  include Galilei::Helpers
+end
+
 describe Galilei::Helpers do
+  let(:tester) { TestClass.new }
+  
   it 'tests unknown methods to see if Faker responds to them' do
     pending "yes, RSpec, I know 'some_random_undefined_method_name' is undefined. That's the *point.*"
     Faker.constants.each do |const_name|
@@ -10,7 +16,7 @@ describe Galilei::Helpers do
       end
     end
     
-    Galilei::Helpers.send :some_random_undefined_method_name
+    tester.some_random_undefined_method_name
   end
   
   shared_examples_for "any text-generating method" do
