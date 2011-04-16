@@ -18,6 +18,21 @@ describe Galilei::Helpers do
     tester.some_random_undefined_method_name
   end
   
+  def abstract_random_test(method_name, min = 1, max = 20, symbol = nil)
+    param = symbol || (min..max)
+    different_numbers = false
+    seed_number = tester.send(method_name, param).split(' ').length
+    ((max - min) * 2).times do
+      x = tester.send(method_name, param).split(' ').length
+      if !different_numbers && x != seed_number
+        different_numbers = true
+      end
+      x.should be <= max
+      x.should be >= min
+    end
+    different_numbers.should be_true
+  end
+  
   describe "#words" do
     it 'generates text' do
       tester.words.should be_an_instance_of(String)
@@ -28,17 +43,19 @@ describe Galilei::Helpers do
     end
     
     it 'generates a random number of words when given a range (but a number within the range)' do
-      different_numbers = false
-      seed_number = tester.words(1..20).split(' ').length
-      10.times do
-        x = tester.words(1..20).split(' ').length
-        if !different_numbers && x != seed_number
-          different_numbers = true
-        end
-        x.should be <= 20
-        x.should be >= 1
-      end
-      different_numbers.should be_true
+      abstract_random_test :words
+    end
+    
+    it 'generates between 1 and 5 words when passed :short' do
+      abstract_random_test :words, 1, 5, :short
+    end
+
+    it 'generates between 6 and 12 words when passed :medium' do
+      abstract_random_test :words, 6, 12, :medium
+    end
+
+    it 'generates between 13 and 22 words when passed :long' do
+      abstract_random_test :words, 13, 22, :long
     end
   end
   
