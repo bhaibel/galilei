@@ -26,12 +26,16 @@ module Galilei
         faker = Faker.const_get(faker_name)
         if faker.respond_to? method_name
           if length
-            return faker.send method_name, length
+            return add_whitespace_if_array(faker.send method_name, length)
           else
-            return faker.send method_name
+            return add_whitespace_if_array(faker.send method_name)
           end
         end
       end
+    end
+    
+    def add_whitespace_if_array(possible_array, separator = ' ')
+      possible_array.is_a?(Array) ? possible_array.join(separator) : possible_array
     end
   end
 end
