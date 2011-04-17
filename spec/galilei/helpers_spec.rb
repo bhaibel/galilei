@@ -11,7 +11,7 @@ describe Galilei::Helpers do
     Faker.constants.each do |const_name|
       const = Faker.const_get(const_name)
       if const.is_a? Class # we don't care about VERSION
-        const.should_receive(:some_random_undefined_method_name)
+        const.should_receive(:respond_to?).with(:some_random_undefined_method_name)
       end
     end
     
